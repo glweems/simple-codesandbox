@@ -1,13 +1,21 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import ExampleComponent from 'simple-codesandbox'
+import CodeSandbox from 'simple-codesandbox';
 
-export default class App extends Component {
-  render () {
-    return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
-      </div>
-    )
-  }
+export default function App(): any {
+  return (
+    <div>
+      <section>
+        <h2>Views</h2>
+        <CodeSandbox height="50vh" />
+        {/* <CodeSandbox sandboxId="react-peekaboo-navbar-0nsms" view="editor" />
+        <CodeSandbox sandboxId="react-peekaboo-navbar-0nsms" view="preview" /> */}
+      </section>
+      <section>
+        <h2>Auto resize</h2>
+        {/* <CodeSandbox autoResize={false} />
+        <CodeSandbox autoResize={false} /> */}
+      </section>
+    </div>
+  );
 }
