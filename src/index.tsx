@@ -1,7 +1,4 @@
-/**
- * @class ExampleComponent
- */
-
+/* eslint-disable no-restricted-syntax */
 import * as React from 'react';
 import * as queryString from 'query-string';
 import {
@@ -12,111 +9,138 @@ import {
   WidthProperty
 } from 'csstype';
 
-export type Props = {
-  src: string | false;
-  sandbox: string;
-  title: string;
-  autoResize: boolean;
-  expandDevTools: boolean;
+/* Embed Options
+
+The options shown in the embed modal are not all options available. We need a
+new UI for the share model to reflect these options, in the meantime you can
+find them here.
+
+Option           Description / Values     -  Default
+
+autoresize      -  0/1                    -  0      -  Automatically resize the embed to the content (only works on Medium).
+codemirror      -  0/1                    -  0      -  Use CodeMirror editor instead of Monaco (decreases embed size significantly).
+editorsize      -  number                 -  50     -  Size in percentage of editor.
+eslint          -  0/1                    -  0      -  Use eslint (increases embed size significantly).
+expanddevtools  -  0/1                    -  0      -  Start with the devtools (console) open.
+fontsize        -  number (in px)         -  14     -  Font size of editor
+forcerefresh    -  0/1                    -  0      -  Force a full refresh of frame after every edit.
+hidenavigation  -  0/1                    -  0      -  Hide the navigation bar of the preview.
+highlights      -  [num, num, num]        -  null   -  Which lines to highlight (only works in CodeMirror)
+initialpath     --  string                -  /      -  Which url to initially load in address bar
+module          --  opened files          -  null
+                    Multiple paths comma separated are allowed,
+                    in that case we show them as tabs | path to module (starting with `/`) */
+// type ZeroOrOne = number;
+
+interface SandboxQuery<Type> {
+  codeMirror: Type;
+  editorSize: number;
+  eslint: Type;
+  expandDevTools: Type;
   fontSize: number;
-  hideNavigation: boolean;
-  view: undefined | 'preview' | 'editor';
-  moduleView: boolean;
-  previewWindow: 'tests' | undefined;
+  forceRefresh: Type;
+  hideNavigation: Type;
+  highlights: null | number[];
+  initialPath: string;
+  moduleView: string;
+  previewWindow: 'console' | 'tests' | 'browser';
+  runOnClick: boolean;
+  verticalLayout: Type;
+  view: 'split' | 'preview' | 'editor';
+  module: string | string[];
+}
+
+interface Props extends SandboxQuery<boolean> {
+  sandbox: string;
+  github?: {
+    username: string;
+    repo: string;
+    branch: string;
+  };
+  title: string;
+  className: string;
+  style: StyleSheetList;
   width: WidthProperty<string>;
   height: HeightProperty<string>;
   border: BorderProperty<string>;
   borderRadius: BorderRadiusProperty<string>;
   overflow: OverflowProperty;
-  codeMirror: boolean;
-};
+}
 
-// const allow = [
-//   'geolocation',
-//   'microphone',
-//   'camera',
-//   'midi',
-//   'vr',
-//   'accelerometer',
-//   'gyroscope',
-//   'payment',
-//   'ambient-light-sensor',
-//   'encrypted-media'
-// ];
-// const sandbox = [
-//   'allow-modals',
-//   'allow-forms ',
-//   'allow-popups',
-//   'allow-scripts',
-//   'allow-same-origin'
-// ];
-
-/*  <iframe src="https://codesandbox.io/embed/react-navbar-scroller-44wd0?
-  autoresize=1
-  &expanddevtools=1
-  &fontsize=14
-  &hidenavigation=1
-  &view=preview"
-   title="react-navbar-scroller"
-    allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media"
-    style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe> */
+const boolToNum = (bool: boolean): 1 | 0 => (bool ? 1 : 0);
 
 const CodeSandbox = ({
-  sandbox = 'react-navbar-scroller-44wd0',
-  title = sandbox.slice(0, sandbox.length - 6),
-  autoResize = true,
+  sandbox = 'github/glweems/empty-sandbox/tree/dev/',
+  github,
+  title = 'code sandbox embed',
+  codeMirror = false,
+  editorSize = 50,
+  eslint = false,
   expandDevTools = false,
   fontSize = 14,
-  hideNavigation = true,
-  view = undefined,
-  moduleView = true,
+  forceRefresh = false,
+  hideNavigation = false,
+  highlights,
+  initialPath = '/',
+  module = '/',
+  moduleView = '/',
+  previewWindow = 'browser',
+  runOnClick = false,
+  verticalLayout = false,
+  view = 'split',
+  className,
+  style,
   width = '100%',
-  height = '500px',
+  height = '50vh',
   border = '0',
-  borderRadius = '4px',
-  overflow = 'hidden',
-  previewWindow = undefined,
-  codeMirror = false
+  borderRadius = '4px'
 }: Props): JSX.Element => {
-  const url = `https://codesandbox.io/embed/${sandbox}`;
+  const base = `https://codesandbox.io/embed`;
 
-  const query = queryString
+  const options = queryString
     .stringify({
+      codeMirror: boolToNum(codeMirror),
+      editorSize,
+      eslint: boolToNum(eslint),
+      expandDevTools: boolToNum(expandDevTools),
       fontSize,
+      forceRefresh: boolToNum(forceRefresh),
+      hideNavigation: boolToNum(hideNavigation),
+      highlights,
+      initialPath,
+      module,
+      moduleView,
       previewWindow,
-      view: view || undefined,
-      autoResize: autoResize ? 1 : undefined,
-      codeMirror: codeMirror ? 1 : undefined,
-      moduleview: moduleView ? 1 : undefined,
-      hideNavigation: hideNavigation ? 1 : undefined,
-      expandDevTools: expandDevTools ? 1 : undefined
+      runOnClick: boolToNum(runOnClick),
+      verticalLayout: boolToNum(verticalLayout),
+      view
     })
     .toLowerCase();
 
-  const config = `${url}?${query}`;
+  const url = (): string => {
+    if (github !== undefined) {
+      const { username, repo, branch = 'master' } = github;
+      return `${base}/github${username}/${repo}/tree${branch}?${options}&highlights=1,3`;
+    }
+    return `${base}/${sandbox}?${options}`;
+  };
 
   return (
     <iframe
-      src={config}
+      src={url()}
       title={title}
-      style={{ width, height, border, borderRadius, overflow }}
+      className={className}
       allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media"
       sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+      style={{
+        width,
+        height,
+        border,
+        borderRadius,
+        ...style
+      }}
     />
   );
 };
 
 export default CodeSandbox;
-
-/*
-
-
-  const createUrlWithOptions = (): string => {
-    const url = `https://codesandbox.io/embed/${sandboxId}`;
-    url.concat(`?fontsize=${fontSize}`);
-    if (autoResize) url.concat('&autoresize=1');
-
-    return url;
-  };
-
-  */

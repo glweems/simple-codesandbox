@@ -10,6 +10,42 @@
 npm install --save simple-codesandbox
 ```
 
+## Embed Options
+
+The options shown in the embed modal are not all options available. We need a
+new UI for the share model to reflect these options, in the meantime you can
+find them here.
+
+| Option           | Description                                                                        | Values                               | Default                              |
+| ---------------- | ---------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------ |
+| `codeMirror`     | Use CodeMirror editor instead of Monaco (decreases embed size significantly).      | `boolean`                              | `false`                            |
+| `editorSize`     | Size in percentage of editor.                                                      | `number`                               | `50`                                 |
+| `eslint`         | Use eslint (increases embed size significantly).                                   | `boolean`                              | `false`                            |
+| `expandDevTools` | Start with the devtools (console) open.                                            | `boolean`                              | `false`                            |
+| `fontSize`       | Font size of editor                                                                | `number (in px)`                       | `14`                                 |
+| `forceRefresh`   | Force a full refresh of frame after every edit.                                    | `boolean`                              | `false`                            |
+| `hideNavigation` | Hide the navigation bar of the preview.                                            | `boolean`                              | `false`                            |
+| `highlights`     | Which lines to highlight (only works in CodeMirror)                                | `comma separated list of line numbers` |                                      |
+| `initialPath`    | Which url to initially load in address bar                                         | `string`                               | `/`                                  |
+| `moduleView`     | Evaluate the file that is open in the editor.                                      | `boolean`                              | `false`                                  |
+| `previewWindow`  | Which preview window to open by default                                           | `console` / `tests` / `browser`          | `browser`                            |
+| `runOnClick`     | Only load the preview when the user says so.                                       | `boolean`                              | `false`                                  |
+| `verticalLayout` | Whether to show the editor and preview vertically.                                 | `boolean`                              | `false`                                  |
+| `view`           | Which view to open by default                                                      | `editor` / `split` / `preview`           | `split`, `preview` for small screens |
+| `module`         | Which module to open by default. Multiple paths comma separated are allowed, in that case we show them as tabs | path to module (starting with `/`)   | entry path                           |
+
+## Example Embeds
+
+These are some examples of embeds, based on their properties.
+
+### Smallest Embed
+
+This embed is focused on being as light as possible:
+
+`https://codesandbox.io/embed/new?codemirror=1`
+
+Use this code to embed:
+
 ## Usage
 
 ```tsx
@@ -29,3 +65,39 @@ class Example extends React.Component {
 ## License
 
 MIT © [glweems](https://github.com/glweems)
+## Embed Options
+
+The options shown in the embed modal are not all options available. We need a
+new UI for the share model to reflect these options, in the meantime you can
+find them here.
+
+| Option           | Description                                                                                                    | Values                               | Default                              |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------ |
+| `autoresize`     | Automatically resize the embed to the content (only works on Medium).                                          | `0`/`1`                              | `0`                                  |
+| `codemirror`     | Use CodeMirror editor instead of Monaco (decreases embed size significantly).                                  | `0`/`1`                              | `0`                                  |
+| `editorsize`     | Size in percentage of editor.                                                                                  | number                               | `50`                                 |
+| `eslint`         | Use eslint (increases embed size significantly).                                                               | `0`/`1`                              | `0`                                  |
+| `expanddevtools` | Start with the devtools (console) open.                                                                        | `0`/`1`                              | `0`                                  |
+| `fontsize`       | Font size of editor                                                                                            | number (in px)                       | `14`                                 |
+| `forcerefresh`   | Force a full refresh of frame after every edit.                                                                | `0`/`1`                              | `0`                                  |
+| `hidenavigation` | Hide the navigation bar of the preview.                                                                        | `0`/`1`                              | `0`                                  |
+| `highlights`     | Which lines to highlight (only works in CodeMirror)                                                            | comma separated list of line numbers |                                      |
+| `initialpath`    | Which url to initially load in address bar                                                                     | string                               | `/`                                  |
+| `module`         | Which module to open by default. Multiple paths comma separated are allowed, in that case we show them as tabs | path to module (starting with `/`)   | entry path                           |
+| `moduleview`     | Evaluate the file that is open in the editor.                                                                  | `0`/`1`                              | `0`                                  |
+| `previewwindow`  | Which preview window to open by default                                                                        | `console`/`tests`/`browser`          | `browser`                            |
+| `runonclick`     | Only load the preview when the user says so.                                                                   | `0`/`1`                              | `0`                                  |
+| `verticalLayout` | Whether to show the editor and preview vertically.                                                             | `0`/`1`                              | `0`                                  |
+| `view`           | Which view to open by default                                                                                  | `editor`/`split`/`preview`           | `split`, `preview` for small screens |
+
+## Example Embeds
+
+These are some examples of embeds, based on their properties.
+
+### Smallest Embed
+
+This embed is focused on being as light as possible:
+
+`https://codesandbox.io/embed/new?codemirror=1`
+
+Use this code to embed:

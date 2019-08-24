@@ -7,18 +7,30 @@ import { linkTo } from '@storybook/addon-links';
 import { Welcome } from '@storybook/react/demo';
 import CodeSandbox from 'simple-codesandbox';
 
-storiesOf('Welcome', module).add('to Storybook', () => (
+// const Params = () => (
+
+// )
+
+storiesOf('Documentation', module).add('params', () => (
   <Welcome showApp={linkTo('CodeSandbox')} />
 ));
 
-storiesOf('CodeSandbox', module)
+storiesOf('Config', module)
   .add('Default component', () => <CodeSandbox />)
   .add('Auto Resize Disabled', () => (
     <CodeSandbox autoResize={false} overflow="" />
   ))
-  .add('Preview View', () => <CodeSandbox view="preview" />)
-  .add('Editor View', () => <CodeSandbox view="editor" />)
-  .add('Hide Navigation', () => <CodeSandbox hideNavigation />)
+  .add('Default', () => (
+    <CodeSandbox github={{ username: 'glweems', repo: 'empty-sandbox' }} />
+  ))
+  .add('Code Mirror', () => <CodeSandbox codeMirror />)
+  .add('Eslint', () => <CodeSandbox eslint />)
   .add('Expand Dev Tools', () => <CodeSandbox expandDevTools />)
-  .add('Module View', () => <CodeSandbox moduleView />)
-  .add('Show Tests', () => <CodeSandbox previewWindow="tests" />);
+  .add('Force Refresh', () => <CodeSandbox forceRefresh />)
+  .add('Hide Navigation', () => <CodeSandbox hideNavigation />)
+  .add('Console', () => <CodeSandbox previewWindow="console" />)
+  .add('Testing', () => <CodeSandbox previewWindow="tests" />)
+  .add('Run On Click', () => <CodeSandbox runOnClick />)
+  .add('Vertical ', () => <CodeSandbox verticalLayout />)
+  .add('Editor', () => <CodeSandbox view="editor" />)
+  .add('Preview', () => <CodeSandbox view="preview" />);
