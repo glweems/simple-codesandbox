@@ -33,45 +33,41 @@ module          --  opened files          -  null
 // type ZeroOrOne = number;
 
 interface SandboxQuery<Type> {
-  codeMirror: Type;
-  editorSize: number;
-  eslint: Type;
-  expandDevTools: Type;
-  fontSize: number;
-  forceRefresh: Type;
-  hideNavigation: Type;
-  highlights: null | number[];
-  initialPath: string;
-  moduleView: string;
-  previewWindow: 'console' | 'tests' | 'browser';
-  runOnClick: boolean;
-  verticalLayout: Type;
-  view: 'split' | 'preview' | 'editor';
-  module: string | string[];
+  codeMirror?: Type;
+  editorSize?: number;
+  eslint?: Type;
+  expandDevTools?: Type;
+  fontSize?: number;
+  forceRefresh?: Type;
+  hideNavigation?: Type;
+  highlights?: null | number[];
+  initialPath?: string;
+  moduleView?: string;
+  previewWindow?: 'console' | 'tests' | 'browser';
+  runOnClick?: boolean;
+  verticalLayout?: Type;
+  view?: 'split' | 'preview' | 'editor';
+  module?: string | string[];
 }
 
-interface Props extends SandboxQuery<boolean> {
-  sandbox: string;
-  github?: {
-    username: string;
-    repo: string;
-    branch: string;
-  };
-  title: string;
-  className: string;
-  style: StyleSheetList;
-  width: WidthProperty<string>;
-  height: HeightProperty<string>;
-  border: BorderProperty<string>;
-  borderRadius: BorderRadiusProperty<string>;
-  overflow: OverflowProperty;
+interface CodeSandbox extends SandboxQuery<boolean> {
+  sandbox?: string;
+  git?: [string, string, string, string?];
+  title?: string;
+  className?: string;
+  style?: StyleSheetList;
+  width?: WidthProperty<string>;
+  height?: HeightProperty<string>;
+  border?: BorderProperty<string>;
+  borderRadius?: BorderRadiusProperty<string>;
+  overflow?: OverflowProperty;
 }
 
 const boolToNum = (bool: boolean): 1 | 0 => (bool ? 1 : 0);
 
 const CodeSandbox = ({
   sandbox = 'github/glweems/empty-sandbox/tree/dev/',
-  github,
+  git,
   title = 'code sandbox embed',
   codeMirror = false,
   editorSize = 50,
@@ -94,7 +90,7 @@ const CodeSandbox = ({
   height = '50vh',
   border = '0',
   borderRadius = '4px'
-}: Props): JSX.Element => {
+}: CodeSandbox): JSX.Element => {
   const base = `https://codesandbox.io/embed`;
 
   const options = queryString
@@ -118,9 +114,9 @@ const CodeSandbox = ({
     .toLowerCase();
 
   const url = (): string => {
-    if (github !== undefined) {
-      const { username, repo, branch = 'master' } = github;
-      return `${base}/github${username}/${repo}/tree${branch}?${options}&highlights=1,3`;
+    if (git !== undefined) {
+      const [host, username, repo, branch = 'master'] = git;
+      return `${base}/${host}/${username}/${repo}/tree/${branch}?${options}`;
     }
     return `${base}/${sandbox}?${options}`;
   };
@@ -142,5 +138,22 @@ const CodeSandbox = ({
     />
   );
 };
+
+interface EditSandboxButton {
+  git: [string, string, string, string?];
+}
+
+export const EditSandboxButton = ({
+  git: [host, username, repo, branch = 'master']
+}: EditSandboxButton): JSX.Element => (
+  <a
+    href={`https://codesandbox.io/s/${host}/${username}/${repo}/tree/${branch}?fontsize=14`}
+  >
+    <img
+      alt="Edit react-navbar-scroller"
+      src="https://codesandbox.io/static/img/play-codesandbox.svg"
+    />
+  </a>
+);
 
 export default CodeSandbox;
