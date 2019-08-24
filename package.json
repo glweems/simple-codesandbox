@@ -1,6 +1,6 @@
 {
   "name": "simple-codesandbox",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "easily display configurable codesandbox iframe",
   "author": "glweems",
   "license": "MIT",
