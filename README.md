@@ -63,4 +63,17 @@ const App = () => (
 ## License
 
 MIT © [glweems](https://github.com/glweems)
+<<<<<<< HEAD
+=======
+
+## Example Embeds
+
+These are some examples of embeds, based on their properties.
+
+### Smallest Embed
+
+This embed is focused on being as light as possible:
+
+`https://codesandbox.io/embed/new?codemirror=1`
+>>>>>>> f6181fb01c6f38febfbd428b14ea23f1e9c2555f
 
