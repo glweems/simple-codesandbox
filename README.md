@@ -1,4 +1,4 @@
-I # simple-codesandbox
+# simple-codesandbox
 
 > easily display configurable codesandbox iframe
 
