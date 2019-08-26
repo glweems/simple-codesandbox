@@ -2,6 +2,7 @@
 
 > easily display configurable codesandbox iframe
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f642e363e7c54eb7bbe43a01923e8ee8)](https://app.codacy.com/app/glweems/simple-codesandbox?utm_source=github.com&utm_medium=referral&utm_content=glweems/simple-codesandbox&utm_campaign=Badge_Grade_Settings)
 [![NPM](https://img.shields.io/npm/v/simple-codesandbox.svg)](https://www.npmjs.com/package/simple-codesandbox) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
