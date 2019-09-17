@@ -14,7 +14,7 @@ npm install --save simple-codesandbox
 or
 
 ```bash
-npm install --save simple-codesandbox
+yarn add simple-codesandbox
 ```
 
 ## Embed Options
